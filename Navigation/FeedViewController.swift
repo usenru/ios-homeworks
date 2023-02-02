@@ -9,7 +9,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    let newPost = Post(title: "Здесь могла быть ваша реклама")
+    let newPost = Post(title: "Информация")
     
     private let showPostButton: UIButton = {
         
