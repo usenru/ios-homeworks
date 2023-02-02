@@ -9,13 +9,13 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    let firstVC = FirstViewController()
-    let secondVC = SecondViewController()
+    let firstVC = FeedViewController()
+    let secondVC = ProfileViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+
         let firstNavigationController = UINavigationController(rootViewController: firstVC)
         let secondNavigationController = UINavigationController(rootViewController: secondVC)
         
