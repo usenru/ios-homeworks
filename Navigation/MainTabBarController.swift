@@ -9,26 +9,35 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    let firstVC = FeedViewController()
-    let secondVC = ProfileViewController()
+    private let feedVC = FeedViewController()
+    private let profileVC = ProfileViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        let firstNavigationController = UINavigationController(rootViewController: firstVC)
-        let secondNavigationController = UINavigationController(rootViewController: secondVC)
-        
-        firstVC.tabBarItem.title = "Лента"
-        firstVC.tabBarItem.image = UIImage(systemName: "newspaper.fill")
-        
-        secondVC.tabBarItem.title = "Профиль"
-        secondVC.tabBarItem.image = UIImage(systemName: "person.text.rectangle.fill")
-        
-        viewControllers = [firstNavigationController, secondNavigationController]
+        setupControllers()
         
         
     }
+    
+    
+    
+    private func setupControllers() {
+        
+        let firstNavigationController = UINavigationController(rootViewController: feedVC)
+        let secondNavigationController = UINavigationController(rootViewController: profileVC)
+        
+        feedVC.tabBarItem.title = "Лента"
+        feedVC.tabBarItem.image = UIImage(systemName: "newspaper.fill")
+        
+        profileVC.tabBarItem.title = "Профиль"
+        profileVC.tabBarItem.image = UIImage(systemName: "person.text.rectangle.fill")
+        
+        viewControllers = [firstNavigationController, secondNavigationController]
+        
+    }
+    
+    
     
 
 

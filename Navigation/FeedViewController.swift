@@ -9,7 +9,9 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    private lazy var showPostButton: UIButton = {
+    let newPost = Post(title: "Здесь могла быть ваша реклама")
+    
+    private let showPostButton: UIButton = {
         
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         button.setTitle("Показать пост", for: .normal)
@@ -37,7 +39,9 @@ class FeedViewController: UIViewController {
 
     
     @objc private func tapAction() {
-         let postVC = PostViewController()
+        let postVC = PostViewController()
+        postVC.title = newPost.title
+        
         navigationController?.pushViewController(postVC, animated: true)
     }
 
