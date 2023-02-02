@@ -15,6 +15,7 @@
 		84A49E54298C1986006BB868 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A49E53298C1986006BB868 /* ProfileViewController.swift */; };
 		84A49E56298C3476006BB868 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A49E55298C3476006BB868 /* PostViewController.swift */; };
 		84A49E58298C3E00006BB868 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A49E57298C3E00006BB868 /* Post.swift */; };
+		84A49E5A298C4457006BB868 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A49E59298C4457006BB868 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		84A49E53298C1986006BB868 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		84A49E55298C3476006BB868 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		84A49E57298C3E00006BB868 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		84A49E59298C4457006BB868 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				84A49E51298C1895006BB868 /* MainTabBarController.swift */,
 				84A49E3D298C0DC7006BB868 /* FeedViewController.swift */,
 				84A49E55298C3476006BB868 /* PostViewController.swift */,
+				84A49E59298C4457006BB868 /* InfoViewController.swift */,
 				84A49E53298C1986006BB868 /* ProfileViewController.swift */,
 				84A49E57298C3E00006BB868 /* Post.swift */,
 				84A49E42298C0DCA006BB868 /* Assets.xcassets */,
@@ -146,6 +149,7 @@
 				84A49E54298C1986006BB868 /* ProfileViewController.swift in Sources */,
 				84A49E3E298C0DC7006BB868 /* FeedViewController.swift in Sources */,
 				84A49E3A298C0DC7006BB868 /* AppDelegate.swift in Sources */,
+				84A49E5A298C4457006BB868 /* InfoViewController.swift in Sources */,
 				84A49E58298C3E00006BB868 /* Post.swift in Sources */,
 				84A49E52298C1895006BB868 /* MainTabBarController.swift in Sources */,
 				84A49E56298C3476006BB868 /* PostViewController.swift in Sources */,
