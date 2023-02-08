@@ -16,12 +16,8 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         
         setupControllers()
-        
-        
     }
-    
-    
-    
+        
     private func setupControllers() {
         
         let firstNavigationController = UINavigationController(rootViewController: feedVC)
@@ -40,10 +36,5 @@ class MainTabBarController: UITabBarController {
         viewControllers = [firstNavigationController, secondNavigationController]
         
     }
-    
-    
-    
-
-
 
 }

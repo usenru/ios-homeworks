@@ -48,14 +48,25 @@ class ProfileHeaderView: UIView {
         return $0
     }(UILabel())
     
+    let textField: UITextField = {
+        $0.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        $0.textColor = .black
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.black.cgColor
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 12
+        return $0
+    }(UITextField())
+    
     
     func addViews() {
         addSubview(imageView)
         addSubview(button)
         addSubview(nameLabel)
         addSubview(textLabel)
+        addSubview(textField)
     }
-   
+    
     
     
     
