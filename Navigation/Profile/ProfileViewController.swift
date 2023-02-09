@@ -12,10 +12,19 @@ class ProfileViewController: UIViewController {
     private let screenWidth = UIScreen.main.bounds.width
     private let profileHeaderView = ProfileHeaderView()
     private var statusText: String! = nil
+    
+    private let changeTitleButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setTitle("Title", for: .normal)
+        $0.backgroundColor = .link
+        return $0
+    }(UIButton())
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
+        profileHeaderView.backgroundColor = .yellow
+        view.addSubview(changeTitleButton)
         profileHeaderView.setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         profileHeaderView.statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         layout()
@@ -65,7 +74,12 @@ class ProfileViewController: UIViewController {
             profileHeaderView.statusTextField.heightAnchor.constraint(equalToConstant: 40),
             profileHeaderView.statusTextField.leadingAnchor.constraint(equalTo: profileHeaderView.avatarImageView.trailingAnchor, constant: 16),
             profileHeaderView.statusTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            profileHeaderView.statusTextField.bottomAnchor.constraint(equalTo: profileHeaderView.setStatusButton.topAnchor, constant: -16)
+            profileHeaderView.statusTextField.bottomAnchor.constraint(equalTo: profileHeaderView.setStatusButton.topAnchor, constant: -16),
+            
+            changeTitleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            changeTitleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            changeTitleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            changeTitleButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     

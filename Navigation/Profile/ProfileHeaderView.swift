@@ -12,7 +12,6 @@ class ProfileHeaderView: UIView {
     let avatarImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .systemPink
         image.image = UIImage(named: "Cat")
         image.layer.borderWidth = 3
         image.layer.borderColor = UIColor.white.cgColor
@@ -36,7 +35,6 @@ class ProfileHeaderView: UIView {
     }(UIButton())
     
     let fullNameLabel: UILabel = {
-        $0.backgroundColor = .yellow
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         $0.textColor = .black
@@ -45,7 +43,6 @@ class ProfileHeaderView: UIView {
     }(UILabel())
     
     let statusLabel: UILabel = {
-        $0.backgroundColor = .yellow
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         $0.textColor = .gray
