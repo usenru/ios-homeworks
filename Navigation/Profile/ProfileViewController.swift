@@ -16,35 +16,57 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        profileHeaderView.addViews()
-        
+        profileHeaderView.setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        profileHeaderView.statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        layout()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        view.addSubview(profileHeaderView)
-        profileHeaderView.frame = view.frame
-        profileHeaderView.imageView.frame = CGRect(x: 16, y: view.safeAreaInsets.top + 16, width: 150, height: 150)
-        profileHeaderView.button.frame = CGRect(x: 16, y: view.safeAreaInsets.top + profileHeaderView.imageView.bounds.height + 32, width: screenWidth - 32, height: 50)
-        profileHeaderView.nameLabel.frame = CGRect(x: Int(profileHeaderView.imageView.bounds.width) + 32, y: Int(view.safeAreaInsets.top) + 27, width: Int(screenWidth - profileHeaderView.imageView.bounds.width) - 48, height: 50)
-        profileHeaderView.textLabel.frame = CGRect(x: Int(profileHeaderView.imageView.bounds.width) + 32, y: Int(view.safeAreaInsets.top + profileHeaderView.imageView.bounds.height) - 52, width: Int(screenWidth - profileHeaderView.imageView.bounds.width) - 48, height: 50)
-        profileHeaderView.textField.frame = CGRect(x: profileHeaderView.imageView.bounds.width + 32, y: view.safeAreaInsets.top + profileHeaderView.imageView.bounds.height - 15, width: screenWidth - profileHeaderView.imageView.bounds.width - 48, height: 40)
-        
-        profileHeaderView.button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        profileHeaderView.textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-        
-        
-        
-        
-    }
+    
+    
     
     @objc func buttonPressed() {
-        print("\(profileHeaderView.textLabel.text ?? "")")
-        profileHeaderView.textLabel.text = statusText
+        print("\(profileHeaderView.statusLabel.text ?? "")")
+        profileHeaderView.statusLabel.text = statusText
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text
+    }
+    
+    private func layout() {
+        view.addSubview(profileHeaderView)
+        
+        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
+            
+            profileHeaderView.avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            profileHeaderView.avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            profileHeaderView.avatarImageView.heightAnchor.constraint(equalToConstant: 150),
+            profileHeaderView.avatarImageView.widthAnchor.constraint(equalToConstant: 150),
+            
+            profileHeaderView.fullNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
+            profileHeaderView.fullNameLabel.leadingAnchor.constraint(equalTo: profileHeaderView.avatarImageView.trailingAnchor, constant: 16),
+            profileHeaderView.fullNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            profileHeaderView.setStatusButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            profileHeaderView.setStatusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            profileHeaderView.setStatusButton.topAnchor.constraint(equalTo: profileHeaderView.avatarImageView.bottomAnchor, constant: 16),
+            profileHeaderView.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            profileHeaderView.statusLabel.bottomAnchor.constraint(equalTo: profileHeaderView.setStatusButton.topAnchor, constant: -74),
+            profileHeaderView.statusLabel.leadingAnchor.constraint(equalTo: profileHeaderView.avatarImageView.trailingAnchor, constant: 16),
+            profileHeaderView.statusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+          
+            profileHeaderView.statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            profileHeaderView.statusTextField.leadingAnchor.constraint(equalTo: profileHeaderView.avatarImageView.trailingAnchor, constant: 16),
+            profileHeaderView.statusTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            profileHeaderView.statusTextField.bottomAnchor.constraint(equalTo: profileHeaderView.setStatusButton.topAnchor, constant: -16)
+        ])
     }
     
 

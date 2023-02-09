@@ -9,8 +9,9 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    let imageView: UIImageView = {
+    let avatarImageView: UIImageView = {
         let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
         image.backgroundColor = .systemPink
         image.image = UIImage(named: "Cat")
         image.layer.borderWidth = 3
@@ -21,7 +22,8 @@ class ProfileHeaderView: UIView {
         return image
     }()
     
-    let button: UIButton = {
+    let setStatusButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .link
         $0.setTitle("Show status", for: .normal)
         $0.tintColor = .white
@@ -33,14 +35,18 @@ class ProfileHeaderView: UIView {
         return $0
     }(UIButton())
     
-    let nameLabel: UILabel = {
+    let fullNameLabel: UILabel = {
+        $0.backgroundColor = .yellow
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         $0.textColor = .black
         $0.text = "Hipster Cat"
         return $0
     }(UILabel())
     
-    let textLabel: UILabel = {
+    let statusLabel: UILabel = {
+        $0.backgroundColor = .yellow
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         $0.textColor = .gray
         $0.text = "Waiting for something"
@@ -48,7 +54,8 @@ class ProfileHeaderView: UIView {
         return $0
     }(UILabel())
     
-    let textField: UITextField = {
+    let statusTextField: UITextField = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         $0.textColor = .black
         $0.layer.borderWidth = 1
@@ -58,14 +65,22 @@ class ProfileHeaderView: UIView {
         return $0
     }(UITextField())
     
-    
-    func addViews() {
-        addSubview(imageView)
-        addSubview(button)
-        addSubview(nameLabel)
-        addSubview(textLabel)
-        addSubview(textField)
+    init() {
+        super.init(frame: .zero)
+        addSubview(avatarImageView)
+        addSubview(setStatusButton)
+        addSubview(fullNameLabel)
+        addSubview(statusLabel)
+        addSubview(statusTextField)
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
+    
     
     
     
