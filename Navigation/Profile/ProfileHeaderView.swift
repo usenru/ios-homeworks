@@ -69,11 +69,55 @@ class ProfileHeaderView: UIView {
         addSubview(fullNameLabel)
         addSubview(statusLabel)
         addSubview(statusTextField)
+        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        
+        NSLayoutConstraint.activate([
+        
+        avatarImageView.leadingAnchor.constraint(equalTo: superview!.leadingAnchor, constant: 16),
+        avatarImageView.topAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.topAnchor, constant: 16),
+        avatarImageView.heightAnchor.constraint(equalToConstant: 150),
+        avatarImageView.widthAnchor.constraint(equalToConstant: 150),
+        
+        fullNameLabel.topAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.topAnchor, constant: 27),
+        fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+        fullNameLabel.trailingAnchor.constraint(equalTo: superview!.trailingAnchor, constant: -16),
+        
+        setStatusButton.leadingAnchor.constraint(equalTo: superview!.leadingAnchor, constant: 16),
+        setStatusButton.trailingAnchor.constraint(equalTo: superview!.trailingAnchor, constant: -16),
+        setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+        setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+        
+        statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -74),
+        statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+        statusLabel.trailingAnchor.constraint(equalTo: superview!.trailingAnchor, constant: -16),
+      
+        statusTextField.heightAnchor.constraint(equalToConstant: 40),
+        statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+        statusTextField.trailingAnchor.constraint(equalTo: superview!.trailingAnchor, constant: -16),
+        statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -16)
+        
+        ])
+    }
+    
+    @objc func statusTextChanged(_ textField: UITextField) {
+        let profileVC = ProfileViewController()
+        profileVC.statusText = textField.text
+    }
+    
+    @objc func buttonPressed() {
+        statusLabel.text = statusTextField.text
+        print("\(statusLabel.text ?? "")")
+    }
+    
+    
     
     
     
