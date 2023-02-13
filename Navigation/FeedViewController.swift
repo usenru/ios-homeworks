@@ -11,32 +11,71 @@ class FeedViewController: UIViewController {
     
     let newPost = Post(title: "Информация")
     
-    private let showPostButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        button.setTitle("Показать пост", for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-        return button
-    }()
+    private let stackView: UIStackView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+        $0.spacing = 10
+        return $0
+    }(UIStackView())
+    
+    private let firstButton: UIButton = {
+        $0.setTitle("First Button", for: .normal)
+        $0.backgroundColor = .link
+        $0.tintColor = .white
+        $0.layer.cornerRadius = 4
+        $0.layer.shadowOffset = CGSize(width: 4, height: 4)
+        $0.layer.shadowRadius = 4
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.7
+        return $0
+    }(UIButton())
+    
+    private let secondButton: UIButton = {
+        $0.setTitle("Second Button", for: .normal)
+        $0.backgroundColor = .link
+        $0.backgroundColor = .link
+        $0.tintColor = .white
+        $0.layer.cornerRadius = 4
+        $0.layer.shadowOffset = CGSize(width: 4, height: 4)
+        $0.layer.shadowRadius = 4
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOpacity = 0.7
+
+
+        return $0
+    }(UIButton())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        setupButton()
+        stackView.addArrangedSubview(firstButton)
+        stackView.addArrangedSubview(secondButton)
+        layout()
+        firstButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
+        secondButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
 
     }
     
-    private func setupButton() {
-        view.addSubview(showPostButton)
-        showPostButton.center = view.center
-        showPostButton.layer.cornerRadius = 20
-        showPostButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
+    private func layout() {
+        view.addSubview(stackView)
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.widthAnchor.constraint(equalToConstant: 200),
+            stackView.heightAnchor.constraint(equalToConstant: 110)
+        ])
+        
+    }
+    
+    @objc private func tapAction() {
+        
+        let postVC = PostViewController()
+        navigationController?.pushViewController(postVC, animated: true)
+        
     }
 
-    @objc private func tapAction() {
-        let postVC = PostViewController()
-        postVC.title = newPost.title
-        navigationController?.pushViewController(postVC, animated: true)
-    }
+  
 
 }
 
