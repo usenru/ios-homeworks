@@ -9,7 +9,7 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
-    
+    private let notification = NotificationCenter.default
     
     private let scrollView: UIScrollView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -38,9 +38,9 @@ class LogInViewController: UIViewController {
         $0.tintColor = UIColor(named: "accentColor")
         $0.autocapitalizationType = .none
         $0.backgroundColor = .systemGray6
-        $0.placeholder = "  Email or phone"
+        $0.placeholder = "Email or phone"
         $0.delegate = self
-    
+        $0.indent(size: 20)
         return $0
     }(UITextField())
     
@@ -56,8 +56,9 @@ class LogInViewController: UIViewController {
         $0.autocapitalizationType = .none
         $0.isSecureTextEntry = true
         $0.backgroundColor = .systemGray6
-        $0.placeholder = "  Password"
+        $0.placeholder = "Password"
         $0.delegate = self
+        $0.indent(size: 20)
         return $0
     }(UITextField())
     
@@ -68,10 +69,7 @@ class LogInViewController: UIViewController {
         $0.clipsToBounds = true
         $0.setTitle("Log In", for: .normal)
         $0.tintColor = .white
-        $0.alpha = $0.isSelected ? 0.8 : 1
         $0.addTarget(self, action: #selector(tappedAction), for: .touchUpInside)
-        
-      
         return $0
     }(UIButton())
     
@@ -80,6 +78,33 @@ class LogInViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .white
         layout()
+        buttonState()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        notification.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        notification.removeObserver(UIResponder.keyboardWillShowNotification)
+        notification.removeObserver(UIResponder.keyboardWillHideNotification)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keybordSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            scrollView.contentInset.bottom = keybordSize.height
+            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keybordSize.height, right: 0)
+        }
+    }
+    
+    @objc private func keyboardWillHide() {
+        scrollView.contentInset = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
     }
     
     @objc private func tappedAction() {
@@ -89,10 +114,12 @@ class LogInViewController: UIViewController {
     
     private func layout() {
         
-        let subViews = [scrollView, contentView, logoImageView, userNameTextField, passwordTextField, logInButton]
-        subViews.forEach {
-            view.addSubview($0)
-        }
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(logoImageView)
+        contentView.addSubview(userNameTextField)
+        contentView.addSubview(passwordTextField)
+        contentView.addSubview(logInButton)
         
         NSLayoutConstraint.activate([
         
@@ -125,12 +152,26 @@ class LogInViewController: UIViewController {
             logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-//            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
+            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
             
         ])
         
     }
+    
+    func buttonState() {
+        switch logInButton.state {
+            case .normal: logInButton.alpha = 1
+            case .selected: logInButton.alpha = 0.8
+            case .highlighted: logInButton.alpha = 0.8
+            case .disabled: logInButton.alpha = 0.8
+            default:
+                break
+        }
+    }
+    
+    
+    
     
 }
 
@@ -142,3 +183,12 @@ extension LogInViewController: UITextFieldDelegate {
     }
     
 }
+
+extension UITextField {
+    func indent(size:CGFloat) {
+        self.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: size, height: self.frame.height))
+        self.leftViewMode = .always
+    }
+}
+
+

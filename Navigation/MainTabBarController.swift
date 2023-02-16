@@ -10,7 +10,6 @@ import UIKit
 class MainTabBarController: UITabBarController {
     
     private let feedVC = FeedViewController()
-    private let profileVC = ProfileViewController()
     private let logInVC = LogInViewController()
 
     override func viewDidLoad() {
@@ -22,7 +21,6 @@ class MainTabBarController: UITabBarController {
     private func setupControllers() {
         
         let firstNavigationController = UINavigationController(rootViewController: feedVC)
-        let secondNavigationController = UINavigationController(rootViewController: profileVC)
         let loginNavController = UINavigationController(rootViewController: logInVC)
         
         tabBar.backgroundColor = .white
