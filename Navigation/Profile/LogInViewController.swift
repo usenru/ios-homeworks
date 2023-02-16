@@ -63,6 +63,7 @@ class LogInViewController: UIViewController {
     }(UITextField())
     
     private lazy var logInButton: UIButton = {
+        
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.layer.cornerRadius = 10
         $0.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
@@ -78,21 +79,19 @@ class LogInViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .white
         layout()
-        buttonState()
-        
+        buttonStates()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         notification.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         notification.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        notification.removeObserver(UIResponder.keyboardWillShowNotification)
-        notification.removeObserver(UIResponder.keyboardWillHideNotification)
+        notification.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -159,16 +158,16 @@ class LogInViewController: UIViewController {
         
     }
     
-    func buttonState() {
-        switch logInButton.state {
+    func buttonStates() {
+            switch logInButton.state {
             case .normal: logInButton.alpha = 1
             case .selected: logInButton.alpha = 0.8
             case .highlighted: logInButton.alpha = 0.8
             case .disabled: logInButton.alpha = 0.8
             default:
                 break
+            }
         }
-    }
     
     
     
