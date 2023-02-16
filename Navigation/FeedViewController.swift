@@ -9,7 +9,6 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    let newPost = Post(title: "Информация")
     
     private let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
