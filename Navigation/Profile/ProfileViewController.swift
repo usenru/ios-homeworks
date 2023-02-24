@@ -83,5 +83,14 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableView.automaticDimension
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let photoVC = PhotosViewController()
+            navigationController?.pushViewController(photoVC, animated: true)
+            navigationController?.navigationBar.isHidden = false
+            photoVC.title = "Photo Gallery"
+        }
+    }
 }
 
