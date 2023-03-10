@@ -105,8 +105,5 @@ class PostTableViewCell: UITableViewCell {
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
         ])
-        
     }
-    
-
 }

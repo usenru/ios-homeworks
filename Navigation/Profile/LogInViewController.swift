@@ -63,7 +63,6 @@ class LogInViewController: UIViewController {
     }(UITextField())
     
     private lazy var logInButton: UIButton = {
-        
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.layer.cornerRadius = 10
         $0.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
@@ -83,12 +82,14 @@ class LogInViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print(#function)
         super.viewWillAppear(animated)
         notification.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         notification.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        print(#function)
         super.viewWillDisappear(animated)
         notification.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         notification.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -169,13 +170,9 @@ class LogInViewController: UIViewController {
             }
         }
     
-    
-    
-    
 }
 
 extension LogInViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
