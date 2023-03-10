@@ -13,7 +13,7 @@ protocol ProfileHeaderDelegate: AnyObject {
 
 final class ProfileHeaderView: UIView {
     
-    weak var headerDelegate: ProfileHeaderDelegate?
+    weak var  delegate: ProfileHeaderDelegate?
     
     private let avatarImageView: UIImageView = {
     $0.isUserInteractionEnabled = true
@@ -27,7 +27,7 @@ final class ProfileHeaderView: UIView {
     return $0
 }(UIImageView())
     
-    private let setStatusButton: UIButton = {
+    private lazy var setStatusButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .link
         $0.setTitle("Show status", for: .normal)
@@ -37,6 +37,7 @@ final class ProfileHeaderView: UIView {
         $0.layer.shadowRadius = 4
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.7
+        $0.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -73,7 +74,7 @@ final class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initialization()
+        layout()
         setupGesture()
     }
     
@@ -87,18 +88,16 @@ final class ProfileHeaderView: UIView {
     }
     
     @objc private func tapAction() {
-        headerDelegate?.didTapImage(avatarImageView.image!, imageRect: avatarImageView.frame)
+        delegate?.didTapImage(avatarImageView.image!, imageRect: avatarImageView.frame)
     }
     
-    private func  initialization() {
+    private func  layout() {
         addSubview(setStatusButton)
         addSubview(fullNameLabel)
         addSubview(statusLabel)
         addSubview(statusTextField)
         addSubview(avatarImageView)
         backgroundColor = .white
-        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         
         NSLayoutConstraint.activate([
         
@@ -129,17 +128,11 @@ final class ProfileHeaderView: UIView {
         ])
     }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
-//        let profileVC = ProfileViewController()
-    }
-    
     @objc func buttonPressed() {
         statusLabel.text = statusTextField.text
         print("\(statusLabel.text ?? "")")
     }
-  
 }
-
 
 extension ProfileHeaderView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
