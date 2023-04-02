@@ -7,20 +7,27 @@
 
 import UIKit
 
+protocol ProfileHeaderDelegate: AnyObject {
+    func didTapImage(_ image: UIImage, imageRect: CGRect)
+}
+
 final class ProfileHeaderView: UIView {
     
-    private let avatarImageView: UIImageView = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.image = UIImage(named: "Cat")
-        $0.layer.borderWidth = 3
-        $0.layer.borderColor = UIColor.white.cgColor
-        $0.layer.cornerRadius = 75
-        $0.contentMode = .scaleToFill
-        $0.clipsToBounds = true
-        return $0
-    }(UIImageView())
+    weak var  delegate: ProfileHeaderDelegate?
     
-    private let setStatusButton: UIButton = {
+    private let avatarImageView: UIImageView = {
+    $0.isUserInteractionEnabled = true
+    $0.translatesAutoresizingMaskIntoConstraints = false
+    $0.image = UIImage(named: "Cat")
+    $0.layer.borderWidth = 3
+    $0.layer.borderColor = UIColor.white.cgColor
+    $0.layer.cornerRadius = 75
+    $0.contentMode = .scaleToFill
+    $0.clipsToBounds = true
+    return $0
+}(UIImageView())
+    
+    private lazy var setStatusButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .link
         $0.setTitle("Show status", for: .normal)
@@ -30,6 +37,7 @@ final class ProfileHeaderView: UIView {
         $0.layer.shadowRadius = 4
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.7
+        $0.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -63,24 +71,33 @@ final class ProfileHeaderView: UIView {
         return $0
     }(UITextField())
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initialization()
+        layout()
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func  initialization() {
-        addSubview(avatarImageView)
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        avatarImageView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func tapAction() {
+        delegate?.didTapImage(avatarImageView.image!, imageRect: avatarImageView.frame)
+    }
+    
+    private func  layout() {
         addSubview(setStatusButton)
         addSubview(fullNameLabel)
         addSubview(statusLabel)
         addSubview(statusTextField)
+        addSubview(avatarImageView)
         backgroundColor = .white
-        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         
         NSLayoutConstraint.activate([
         
@@ -111,17 +128,11 @@ final class ProfileHeaderView: UIView {
         ])
     }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
-//        let profileVC = ProfileViewController()
-    }
-    
     @objc func buttonPressed() {
         statusLabel.text = statusTextField.text
         print("\(statusLabel.text ?? "")")
     }
-  
 }
-
 
 extension ProfileHeaderView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
