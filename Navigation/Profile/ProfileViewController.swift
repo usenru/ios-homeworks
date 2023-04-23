@@ -41,6 +41,13 @@ class ProfileViewController: UIViewController {
         imageView.clipsToBounds = true
         return imageView
     }()
+    
+    private let descriptionLabel: UILabel = {
+        $0.alpha = 0
+        $0.numberOfLines = 0
+        $0.backgroundColor = .systemGray6
+        return $0
+    }(UILabel())
 
     let headerTableView = ProfileHeaderView()
     
@@ -52,6 +59,7 @@ class ProfileViewController: UIViewController {
     @objc private func crossButtonAction() {
         crossButton.removeFromSuperview()
         whiteView.removeFromSuperview()
+        descriptionLabel.removeFromSuperview()
         animateImageToInitial(rect: initialImageRect)
     }
     
@@ -82,6 +90,25 @@ class ProfileViewController: UIViewController {
             }
            
         }
+    }
+    
+    private func showDescription(_ description: String) {
+        view.addSubview(whiteView)
+        view.addSubview(descriptionLabel)
+        descriptionLabel.text = description
+        descriptionLabel.frame.size = CGSize(width: UIScreen.main.bounds.width,
+                                                    height: UIScreen.main.bounds.width)
+        descriptionLabel.center = self.view.center
+        
+        UIView.animate(withDuration: 1) {
+            self.descriptionLabel.alpha = 1
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3) {
+                self.view.addSubview(self.crossButton)
+            }
+           
+        }
+        
     }
     
     private func layout() {
@@ -120,6 +147,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
             cell.setupCell(post: ProfileViewController.postArray[indexPath.row])
+            cell.delegate = self
             return cell
         }
     }
@@ -152,7 +180,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension ProfileViewController: ProfileHeaderDelegate {
+extension ProfileViewController: ProfileHeaderDelegate, PostTableViewDelegate {
+    
+    
     func didTapImage(_ image: UIImage, imageRect: CGRect) {
         let rect = headerTableView.frame
         let currentHeaderRect = tableView.convert(rect, to: view)
@@ -163,12 +193,16 @@ extension ProfileViewController: ProfileHeaderDelegate {
         
         animateImage(image, imageFrame: initialImageRect)
     }
+    
+    func didTapPost(_ description: String) {
+        showDescription(description)
+    }
 }
 
 extension ProfileViewController {
-    static var postArray = [Post(author: "Kinopoisk", description: "\"Падение луны\" - это фантастический фильм о группе астронавтов, которые отправляются на луну, чтобы разместить на ее поверхности новую базу. В процессе своей миссии они обнаруживают, что луна начинает уходить с орбиты и скоро столкнется с Землей, вызывая катастрофические последствия.Астронавты пытаются понять причину этого необъяснимого явления, и в их поисках им приходится столкнуться с различными опасностями и трудностями. В ходе своих приключений они обнаруживают, что на луне находится таинственный объект, который, возможно, может остановить движение луны и предотвратить катастрофу. Фильм \"Падение луны\" является захватывающим научно-фантастическим боевиком, который предлагает зрителю увлекательное приключение и множество впечатляющих визуальных эффектов.", image: "falle_moonn", likes: 33, views: 199),
-                            Post(author: "Kinopoisk", description: "\"На картах не значится\" - приключенческий боевик о том, как неудачливый охотник за сокровищами Натан Дрейк отправляется на поиски легендарного города, известного как Эльдорадо, вместе с коварным партнером и загадочной девушкой-исследователем. Но они сталкиваются с сильными противниками и опасностями, которые угрожают не только их жизни, но и будущему человечества.", image: "ancharted", likes: 22, views: 33),
-                            Post(author: "GTA Online", description: "GTA (Grand Theft Auto) - игра в жанре открытого мира, где игрок в роли преступника взаимодействует с городом и выполняет различные задания. Игрок может перемещаться на автомобилях, мотоциклах, лодках и самолетах, общаться с другими персонажами и использовать оружие. В игре присутствует реалистичная графика и множество возможностей для свободного действия в игровом мире.", image: "gta", likes: 33, views: 332),
-                            Post(author: "Subway Surf", description: "\"Subway Surf\" - бесконечный раннер, где игроки играют за персонажа, бегущего по железнодорожным путям, избегая препятствий и собирая монеты, с целью продержаться как можно дольше.", image: "surf", likes: 43, views: 221)
+    static var postArray = [Post(author: "Kinopoisk", description: "\"Падение луны\" - это фантастический фильм о группе астронавтов, которые отправляются на луну, чтобы разместить на ее поверхности новую базу. В процессе своей миссии они обнаруживают, что луна начинает уходить с орбиты и скоро столкнется с Землей, вызывая катастрофические последствия.Астронавты пытаются понять причину этого необъяснимого явления, и в их поисках им приходится столкнуться с различными опасностями и трудностями. В ходе своих приключений они обнаруживают, что на луне находится таинственный объект, который, возможно, может остановить движение луны и предотвратить катастрофу. Фильм \"Падение луны\" является захватывающим научно-фантастическим боевиком, который предлагает зрителю увлекательное приключение и множество впечатляющих визуальных эффектов.", image: "falle_moonn", likes: 0, views: 0),
+                            Post(author: "Kinopoisk", description: "\"На картах не значится\" - приключенческий боевик о том, как неудачливый охотник за сокровищами Натан Дрейк отправляется на поиски легендарного города, известного как Эльдорадо, вместе с коварным партнером и загадочной девушкой-исследователем. Но они сталкиваются с сильными противниками и опасностями, которые угрожают не только их жизни, но и будущему человечества.", image: "ancharted", likes: 0, views: 0),
+                            Post(author: "GTA Online", description: "GTA (Grand Theft Auto) - игра в жанре открытого мира, где игрок в роли преступника взаимодействует с городом и выполняет различные задания. Игрок может перемещаться на автомобилях, мотоциклах, лодках и самолетах, общаться с другими персонажами и использовать оружие. В игре присутствует реалистичная графика и множество возможностей для свободного действия в игровом мире.", image: "gta", likes: 0, views: 0),
+                            Post(author: "Subway Surf", description: "\"Subway Surf\" - бесконечный раннер, где игроки играют за персонажа, бегущего по железнодорожным путям, избегая препятствий и собирая монеты, с целью продержаться как можно дольше.", image: "surf", likes: 0, views: 0)
     ]
 }

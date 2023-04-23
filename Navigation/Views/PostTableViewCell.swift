@@ -7,8 +7,17 @@
 
 import UIKit
 
+protocol PostTableViewDelegate: AnyObject {
+    func didTapPost(_ description: String)
+}
+
 class PostTableViewCell: UITableViewCell {
     
+    weak var delegate: PostTableViewDelegate?
+    
+    private var likes = 0
+    private var views = 0
+      
     private let authorLabel: UILabel = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -29,6 +38,7 @@ class PostTableViewCell: UITableViewCell {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .black
+        $0.isUserInteractionEnabled = true
         return $0
     }(UILabel())
     
@@ -43,6 +53,7 @@ class PostTableViewCell: UITableViewCell {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFit
         $0.backgroundColor = .black
+        $0.isUserInteractionEnabled = true
         return $0
     }(UIImageView())
     
@@ -55,6 +66,7 @@ class PostTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -76,6 +88,25 @@ class PostTableViewCell: UITableViewCell {
         descriptionLabel.text = post.description
         viewsLabel.text = "Views: \(post.views)"
         likesLabel.text = "Likes: \(post.likes)"
+    }
+    
+    private func setupGesture() {
+        let tapLikeGesture = UITapGestureRecognizer(target: self, action: #selector(tapLikeAction))
+        likesLabel.addGestureRecognizer(tapLikeGesture)
+        
+        let tapPostGesture = UITapGestureRecognizer(target: self, action: #selector(tapPostAction))
+        postImageView.addGestureRecognizer(tapPostGesture)
+    }
+    
+    @objc private func tapPostAction() {
+        views += 1
+        viewsLabel.text = "Views: \(views)"
+        delegate?.didTapPost(descriptionLabel.text!)
+    }
+    
+    @objc private func tapLikeAction() {
+        likes += 1
+        likesLabel.text = "Likes: \(likes)"
     }
     
     private func layout() {
@@ -107,3 +138,5 @@ class PostTableViewCell: UITableViewCell {
         ])
     }
 }
+
+

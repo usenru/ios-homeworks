@@ -76,20 +76,13 @@
 		84A49E38298C0DC7006BB868 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				F92693B429F565BE00B967AE /* Application */,
+				F92693B529F565D200B967AE /* Extension */,
+				F92693B629F5660600B967AE /* Model */,
 				84B394FA2993EA2500FDE6A4 /* Profile */,
-				84A49E39298C0DC7006BB868 /* AppDelegate.swift */,
-				84A49E51298C1895006BB868 /* MainTabBarController.swift */,
-				84A49E3D298C0DC7006BB868 /* FeedViewController.swift */,
-				84A49E55298C3476006BB868 /* PostViewController.swift */,
-				84A49E59298C4457006BB868 /* InfoViewController.swift */,
-				84A49E57298C3E00006BB868 /* Post.swift */,
-				84A49E42298C0DCA006BB868 /* Assets.xcassets */,
-				84A49E44298C0DCA006BB868 /* LaunchScreen.storyboard */,
-				84A49E47298C0DCA006BB868 /* Info.plist */,
-				841D619D299E52E0009A0A2D /* UIView+Extension.swift */,
-				F927FEAE29A93BAA00F283D8 /* PhotosTableViewCell.swift */,
-				F99A402329A9563F00DCF266 /* PhotosViewController.swift */,
-				F99A402529A959CD00DCF266 /* PhotosCollectionViewCell.swift */,
+				F92693B829F5662700B967AE /* Resources */,
+				F92693B729F5661000B967AE /* ViewControllers */,
+				F92693B329F5659C00B967AE /* Views */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -97,12 +90,67 @@
 		84B394FA2993EA2500FDE6A4 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				84B394FB2993EA3800FDE6A4 /* ProfileHeaderView.swift */,
-				84A49E53298C1986006BB868 /* ProfileViewController.swift */,
-				841D619B299E452D009A0A2D /* PostTableViewCell.swift */,
 				8465111B299D0A7700195C70 /* LogInViewController.swift */,
+				84A49E53298C1986006BB868 /* ProfileViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		F92693B329F5659C00B967AE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				84B394FB2993EA3800FDE6A4 /* ProfileHeaderView.swift */,
+				F927FEAE29A93BAA00F283D8 /* PhotosTableViewCell.swift */,
+				841D619B299E452D009A0A2D /* PostTableViewCell.swift */,
+				F99A402529A959CD00DCF266 /* PhotosCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F92693B429F565BE00B967AE /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				84A49E39298C0DC7006BB868 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		F92693B529F565D200B967AE /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				841D619D299E52E0009A0A2D /* UIView+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		F92693B629F5660600B967AE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84A49E57298C3E00006BB868 /* Post.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F92693B729F5661000B967AE /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				84A49E51298C1895006BB868 /* MainTabBarController.swift */,
+				84A49E3D298C0DC7006BB868 /* FeedViewController.swift */,
+				84A49E55298C3476006BB868 /* PostViewController.swift */,
+				84A49E59298C4457006BB868 /* InfoViewController.swift */,
+				F99A402329A9563F00DCF266 /* PhotosViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F92693B829F5662700B967AE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				84A49E42298C0DCA006BB868 /* Assets.xcassets */,
+				84A49E44298C0DCA006BB868 /* LaunchScreen.storyboard */,
+				84A49E47298C0DCA006BB868 /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,7 +376,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Navigation/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -354,7 +402,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Navigation/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
