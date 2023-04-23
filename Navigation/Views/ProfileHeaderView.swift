@@ -85,11 +85,13 @@ final class ProfileHeaderView: UIView {
     private func setupGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         avatarImageView.addGestureRecognizer(tapGesture)
-    }
+        }
     
     @objc private func tapAction() {
         delegate?.didTapImage(avatarImageView.image!, imageRect: avatarImageView.frame)
     }
+    
+    
     
     private func  layout() {
         addSubview(setStatusButton)
@@ -129,6 +131,11 @@ final class ProfileHeaderView: UIView {
     }
     
     @objc func buttonPressed() {
+        guard statusTextField.text?.count ?? 0 > 0 else {
+            statusLabel.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+            return
+        }
+        
         statusLabel.text = statusTextField.text
         print("\(statusLabel.text ?? "")")
     }

@@ -7,6 +7,9 @@
 
 import UIKit
 
+private let login = "login"
+private let password = "password"
+
 class LogInViewController: UIViewController {
     
     private let notification = NotificationCenter.default
@@ -73,6 +76,17 @@ class LogInViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private let warningLabel: UILabel = {
+        $0.text = "Предупреждение \nМинимальное количество символов пароля 8"
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+        $0.textAlignment = .center
+        $0.layer.cornerRadius = 10
+        $0.numberOfLines = 0
+        $0.clipsToBounds = true
+        return $0
+    }(UILabel())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -86,6 +100,9 @@ class LogInViewController: UIViewController {
         super.viewWillAppear(animated)
         notification.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         notification.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        userNameTextField.backgroundColor = .white
+        passwordTextField.backgroundColor = .white
+        warningLabel.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -108,6 +125,33 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func tappedAction() {
+        
+        guard userNameTextField.text?.count ?? 0 > 0 else {
+            userNameTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+            return
+        }
+        guard passwordTextField.text?.count ?? 0 > 0 else {
+            passwordTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+            return
+        }
+        
+        guard passwordTextField.text?.count ?? 1 > 7 else {
+            warningLabel.isHidden = false
+            return
+        }
+        
+        guard userNameTextField.text == login else {
+            checkForLogin()
+            return
+        }
+        
+        guard passwordTextField.text == password else {
+            checkForLogin()
+            return
+        }
+        
+        
+        
         let profileVC = ProfileViewController()
         navigationController?.pushViewController(profileVC, animated: true)
     }
@@ -120,6 +164,7 @@ class LogInViewController: UIViewController {
         contentView.addSubview(userNameTextField)
         contentView.addSubview(passwordTextField)
         contentView.addSubview(logInButton)
+        contentView.addSubview(warningLabel)
         
         NSLayoutConstraint.activate([
         
@@ -153,7 +198,12 @@ class LogInViewController: UIViewController {
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
-            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            warningLabel.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
+            warningLabel.leftAnchor.constraint(equalTo: logInButton.leftAnchor),
+            warningLabel.rightAnchor.constraint(equalTo: logInButton.rightAnchor),
+            warningLabel.heightAnchor.constraint(equalToConstant: 50)
             
         ])
         
@@ -169,7 +219,6 @@ class LogInViewController: UIViewController {
                 break
             }
         }
-    
 }
 
 extension LogInViewController: UITextFieldDelegate {
@@ -184,6 +233,17 @@ extension UITextField {
     func indent(size:CGFloat) {
         self.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: size, height: self.frame.height))
         self.leftViewMode = .always
+    }
+}
+
+extension LogInViewController {
+    private func checkForLogin() {
+        let alert = UIAlertController(title: "Предупреждение", message: "Неправильно введен логин или пароль", preferredStyle: .alert)
+        let actionOk = UIAlertAction(title: "Ok", style: .default)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(actionOk)
+        alert.addAction(actionCancel)
+        present(alert, animated: true)
     }
 }
 
